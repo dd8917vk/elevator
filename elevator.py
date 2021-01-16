@@ -49,6 +49,7 @@ class Elevator():
                 time.sleep(1)
             elif self.current_floor > selection:
                 for floor in range(self.current_floor, selection, -1):
+                    self.check_floor(passenger)
                     print(f'Now on floor {self.current_floor}')
                     self.current_floor-=1
                     time.sleep(1)
@@ -63,6 +64,7 @@ class Elevator():
             else:
                 if self.current_floor < selection:
                     for floor in range(self.current_floor, selection):
+                        self.check_floor(passenger)
                         print(f'Now on floor {self.current_floor}')
                         self.current_floor+=1
                         time.sleep(1)
@@ -77,6 +79,10 @@ class Elevator():
         else:
             self.queue.append(selection)
             print(self.queue)
+
+    def check_floor(self, current_passenger):
+        if current_passenger.floor_selection == self.current_floor:
+            self.passengers.remove(passenger)
 
 class Passenger():
     def __init__(self, name):
@@ -101,12 +107,18 @@ def start():
         print("***************")
         print("1: Add a Passenger")
         print("2: Push a button to move the elevator")
+        print("3: List Passengers")
         print("***************")
         choice = str(input("Enter your choice---> "))
         if choice == '1':
             e.add_passenger()
         elif choice == '2':
             e.push_button()
+        elif choice == '3':
+            print("Current Passengers")
+            print(e.get_name_list())
+            time.sleep(1)
+
 
 e = Elevator()
 start()
